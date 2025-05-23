@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>План готовки для OL550EU</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+#plan {
+    margin-top: 20px;
+}
+.day {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+button {
+    margin-top: 5px;
+}
+</style>
+</head>
+<body>
+<h1>План готовки для OL550EU</h1>
+<button id="generate">Сгенерировать план на неделю</button>
+<div id="plan"></div>
+<script>
+const recipes = [
+    {
+        name: 'Плов в режиме "Рис"',
+        instructions: 'Промыть 2 стакана риса, добавить 1 стакан мяса, 2 стакана воды и специи. Готовить в режиме "Рис" 25 минут.'
+    },
+    {
+        name: 'Тушёная курица в режиме "Тушение"',
+        instructions: 'Нарезать курицу, добавить овощи и соус. Установить режим "Тушение" на 40 минут.'
+    },
+    {
+        name: 'Крем-суп в режиме "Суп"',
+        instructions: 'Смешать овощи и бульон, варить 30 минут в режиме "Суп" и затем измельчить блендером.'
+    },
+    {
+        name: 'Йогурт в режиме "Йогурт"',
+        instructions: 'Смешать молоко и закваску, разлить по баночкам и готовить 8 часов в режиме "Йогурт".'
+    },
+    {
+        name: 'Овсяная каша в режиме "Крупа"',
+        instructions: 'Смешать овсяные хлопья и молоко в пропорции 1:3, готовить 10 минут в режиме "Крупа".'
+    },
+    {
+        name: 'Запеканка в режиме "Выпечка"',
+        instructions: 'Смешать творог, яйца и сахар, выложить в форму и выпекать 45 минут в режиме "Выпечка".'
+    },
+    {
+        name: 'Гречка с грибами',
+        instructions: 'Обжарить грибы, добавить гречку и воду. Готовить 20 минут в режиме "Крупа".'
+    },
+    {
+        name: 'Чили кон карне',
+        instructions: 'Соединить фасоль, фарш и томаты. Готовить 30 минут в режиме "Тушение".'
+    },
+    {
+        name: 'Рагу из овощей',
+        instructions: 'Порезать овощи, добавить специи и готовить 25 минут в режиме "Тушение".'
+    },
+    {
+        name: 'Паровые котлеты',
+        instructions: 'Сформировать котлеты и готовить на решетке 20 минут в режиме "Пар".'
+    }
+];
+
+function randomRecipe() {
+    const idx = Math.floor(Math.random() * recipes.length);
+    return recipes[idx];
+}
+
+function generatePlan() {
+    const plan = document.getElementById('plan');
+    plan.innerHTML = '';
+    for (let i = 0; i < 7; i++) {
+        const recipe = randomRecipe();
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'day';
+        const title = document.createElement('h3');
+        title.textContent = `День ${i + 1}: ${recipe.name}`;
+        const instr = document.createElement('p');
+        instr.textContent = recipe.instructions;
+        const btn = document.createElement('button');
+        btn.textContent = 'Заменить';
+        btn.onclick = function() {
+            const newRecipe = randomRecipe();
+            title.textContent = `День ${i + 1}: ${newRecipe.name}`;
+            instr.textContent = newRecipe.instructions;
+        };
+        dayDiv.appendChild(title);
+        dayDiv.appendChild(instr);
+        dayDiv.appendChild(btn);
+        plan.appendChild(dayDiv);
+    }
+}
+
+document.getElementById('generate').addEventListener('click', generatePlan);
+</script>
+</body>
+</html>
